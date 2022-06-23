@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
+import { v4 as uuid } from 'uuid';
+
 import Header from "./components/Header";
 import { products } from "../src/lib/data/Products";
 import { ProductInterface } from "./lib/interfaces/ProductInterface";
@@ -8,8 +10,11 @@ import Cart from "./components/Cart/Cart";
 function App() {
   const [productList, setProductList] = useState<ProductInterface[]>(products);
   const [orderItems, setOrderItems] = useState<ProductInterface[]>([]);
+ const orderId = useRef(null);
+  
 
   function addToCart(product: ProductInterface) {
+    const cartItems = [...orderItems]
     let alreadyInCart = false;
     [...orderItems].forEach((item) => {
       if (item.code === product.code) {
@@ -18,12 +23,32 @@ function App() {
       }
     });
     if (!alreadyInCart) {
-      setOrderItems([...orderItems, product]);
+      cartItems.push({...product, count : 1})
     }
+    setOrderItems(cartItems);
+    localStorage.setItem("cartItems", JSON.stringify(cartItems))
   }
 
   function removeFromCart(product: ProductInterface) {
-    setOrderItems([...orderItems].filter((item) => item.code !== product.code));
+    const cartItems = [...orderItems];
+    setOrderItems(cartItems.filter((item) => item.code !== product.code));
+    localStorage.setItem(
+      "cartItems",
+      JSON.stringify(cartItems.filter((item) => item.code !== product.code))
+    );
+  }
+
+  function createOrder(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    e.preventDefault();
+    const unique_id = uuid();
+    const order = {
+      date: new Date(),
+      id: unique_id,
+      items: orderItems,
+      status: "Pending Approval",
+    };
+
+    console.log(order);
   }
 
   return (
@@ -37,7 +62,11 @@ function App() {
               return (
                 <div key={index}>
                   <p>{product.name}</p>
-                  <button onClick={() => addToCart(product)}>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={() => addToCart(product)}
+                  >
                     Add to order
                   </button>
                 </div>
@@ -58,11 +87,25 @@ function App() {
                   <div className="flex flex-row" key={index}>
                     <div>{item.name}</div>
                     <span> x {item.count}</span>
-                    <button onClick={() => removeFromCart(item)}>Remove</button>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={() => removeFromCart(item)}
+                    >
+                      Remove
+                    </button>
                   </div>
                 );
               })}
-              <button>Pass your order</button>
+              <button
+                type="button"
+                className="btn btn-warning"
+                onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
+                  createOrder(e)
+                }
+              >
+                Pass your order
+              </button>
             </>
           )}
         </div>
