@@ -12,3 +12,5 @@ install Tailwind
 https://tailwindcss.com/docs/installation/play-cdn
 install uuid4
 npm install uuidv4
+implement redux 
+install redux toolkit
