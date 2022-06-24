@@ -1,20 +1,21 @@
-import { useRef, useState } from "react";
-import { v4 as uuid } from 'uuid';
-
+import { useEffect, useRef, useState } from "react";
+import { v4 as uuid } from "uuid";
 import Header from "./components/Header";
-import { products } from "../src/lib/data/Products";
 import { ProductInterface } from "./lib/interfaces/ProductInterface";
-import Products from "./components/Products/Products";
-import Cart from "./components/Cart/Cart";
+import { useGetProductsQuery } from "./redux";
 
 function App() {
-  const [productList, setProductList] = useState<ProductInterface[]>(products);
+  const [orders, setOrders] = useState<ProductInterface[]>();
   const [orderItems, setOrderItems] = useState<ProductInterface[]>([]);
- const orderId = useRef(null);
-  
+  const orderId = useRef(null);
+
+
+  const {data: products, isSuccess} = useGetProductsQuery();
+
+  console.log(products);
 
   function addToCart(product: ProductInterface) {
-    const cartItems = [...orderItems]
+    const cartItems = [...orderItems];
     let alreadyInCart = false;
     [...orderItems].forEach((item) => {
       if (item.code === product.code) {
@@ -23,10 +24,10 @@ function App() {
       }
     });
     if (!alreadyInCart) {
-      cartItems.push({...product, count : 1})
+      cartItems.push({ ...product, count: 1 });
     }
     setOrderItems(cartItems);
-    localStorage.setItem("cartItems", JSON.stringify(cartItems))
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }
 
   function removeFromCart(product: ProductInterface) {
@@ -58,7 +59,7 @@ function App() {
       <div className="content flex flex-row">
         <div className="main w-3/4">
           <div className="products grid grid-cols-3 gap-x-8 gap-y-4">
-            {products.map((product, index: number) => {
+            {isSuccess && products.map((product: ProductInterface, index: number) => {
               return (
                 <div key={index}>
                   <p>{product.name}</p>
