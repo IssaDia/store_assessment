@@ -11,7 +11,7 @@ const productApi = createApi({
   reducerPath: "prdoductApi",
   baseQuery: fetchBaseQuery({ baseUrl: url }),
   endpoints: (builder) => ({
-    getProducts: builder.query({
+    getProducts: builder.query<ProductInterface[], void>({
       query: () => `/api/products`,
     }),
   }),

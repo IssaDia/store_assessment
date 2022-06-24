@@ -1,2 +1,0 @@
-export const FETCH_ORDERS = "FETCH_ORDERS";
-export const FETCH_LOT_NUMBER = "FETCH_LOT_NUMBER";
