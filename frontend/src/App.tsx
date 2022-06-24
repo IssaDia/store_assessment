@@ -1,43 +1,19 @@
 import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuid } from "uuid";
 import Header from "./components/Header";
 import { ProductInterface } from "./lib/interfaces/ProductInterface";
-import { useGetProductsQuery } from "./redux";
+import { cartSelector, useGetProductsQuery } from "./redux";
 
 function App() {
-  const [orders, setOrders] = useState<ProductInterface[]>();
-  const [orderItems, setOrderItems] = useState<ProductInterface[]>([]);
-  const orderId = useRef(null);
+  const { data: products, isSuccess } = useGetProductsQuery();
 
+  const orderItems = useSelector(cartSelector);
 
-  const {data: products, isSuccess} = useGetProductsQuery();
+  console.log(orderItems);
 
-  console.log(products);
+  const dispatch = useDispatch();
 
-  function addToCart(product: ProductInterface) {
-    const cartItems = [...orderItems];
-    let alreadyInCart = false;
-    [...orderItems].forEach((item) => {
-      if (item.code === product.code) {
-        item.count++;
-        alreadyInCart = true;
-      }
-    });
-    if (!alreadyInCart) {
-      cartItems.push({ ...product, count: 1 });
-    }
-    setOrderItems(cartItems);
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-  }
-
-  function removeFromCart(product: ProductInterface) {
-    const cartItems = [...orderItems];
-    setOrderItems(cartItems.filter((item) => item.code !== product.code));
-    localStorage.setItem(
-      "cartItems",
-      JSON.stringify(cartItems.filter((item) => item.code !== product.code))
-    );
-  }
 
   function createOrder(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     e.preventDefault();
@@ -59,20 +35,26 @@ function App() {
       <div className="content flex flex-row">
         <div className="main w-3/4">
           <div className="products grid grid-cols-3 gap-x-8 gap-y-4">
-            {isSuccess && products.map((product: ProductInterface, index: number) => {
-              return (
-                <div key={index}>
-                  <p>{product.name}</p>
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={() => addToCart(product)}
-                  >
-                    Add to order
-                  </button>
-                </div>
-              );
-            })}
+            {isSuccess &&
+              products.map((product: ProductInterface, index: number) => {
+                return (
+                  <div key={index}>
+                    <p>{product.name}</p>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={() =>
+                        dispatch({
+                          type: "cart/addToCart",
+                          payload: product,
+                        })
+                      }
+                    >
+                      Add to order
+                    </button>
+                  </div>
+                );
+              })}
           </div>
         </div>
         <div className="sidebar w-1/4">
@@ -81,9 +63,7 @@ function App() {
           ) : (
             <>
               <div> You have {orderItems.length} elements in your order</div>
-              {orderItems.map((item, index) => {
-                console.log(item.count);
-
+              {orderItems.map((item: ProductInterface, index: number) => {
                 return (
                   <div className="flex flex-row" key={index}>
                     <div>{item.name}</div>
@@ -91,7 +71,12 @@ function App() {
                     <button
                       type="button"
                       className="btn btn-primary"
-                      onClick={() => removeFromCart(item)}
+                      onClick={() =>
+                        dispatch({
+                          type: "cart/removeFromCart",
+                          payload: item.code,
+                        })
+                      }
                     >
                       Remove
                     </button>
