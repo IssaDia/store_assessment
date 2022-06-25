@@ -3,30 +3,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuid } from "uuid";
 import Header from "./components/Header";
 import { ProductInterface } from "./lib/interfaces/ProductInterface";
-import { cartSelector, useGetProductsQuery } from "./redux";
+import { cartSelector } from "./redux";
+import { useAddOrderMutation } from "./services/OrderApi";
+import { useGetProductsQuery } from "./services/ProductsApi";
 
 function App() {
   const { data: products, isSuccess } = useGetProductsQuery();
 
   const orderItems = useSelector(cartSelector);
 
-  console.log(orderItems);
-
   const dispatch = useDispatch();
 
+  const unique_id = uuid();
 
-  function createOrder(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-    e.preventDefault();
-    const unique_id = uuid();
+  const [addOrder] = useAddOrderMutation();
+  const addHandler = async () => {
     const order = {
       date: new Date(),
-      id: unique_id,
-      items: orderItems,
+      orderItems: orderItems,
       status: "Pending Approval",
     };
 
+    await addOrder(order);
     console.log(order);
-  }
+  };
 
   return (
     <div className="grid-container">
@@ -86,9 +86,7 @@ function App() {
               <button
                 type="button"
                 className="btn btn-warning"
-                onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
-                  createOrder(e)
-                }
+                onClick={addHandler}
               >
                 Pass your order
               </button>

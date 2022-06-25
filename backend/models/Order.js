@@ -8,8 +8,13 @@ const OrderSchema = new Schema({
     default: shortid.generate,
   },
   date: { type: Date, default: new Date() },
-  status: String,
-  orderItems: [String],
+  orderItems: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Product",
+    },
+  ],
+  status: { type: String, default: "Pending approval" },
 });
 const Order = mongoose.model("Order", OrderSchema);
 

@@ -33,6 +33,7 @@ app.get("/api/products", async (req, res) => {
 
 app.post("/api/order/new", async (req, res) => {
   const newOrder = Order(req.body);
+  console.log(newOrder);
   const savedOrder = await newOrder.save()
   res.send(savedOrder);
 });
