@@ -1,11 +1,13 @@
+import { Link } from "react-router-dom";
+
 function Header() {
  return (
    <>
      <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
        <div className="container-fluid">
-         <a className="navbar-brand" href="#">
+         <Link className="navbar-brand" to="">
            Issa's store
-         </a>
+         </Link>
          <button
            className="navbar-toggler"
            type="button"
@@ -21,25 +23,19 @@ function Header() {
          <div className="collapse navbar-collapse" id="navbarColor01">
            <ul className="navbar-nav me-auto">
              <li className="nav-item">
-               <a className="nav-link active" href="#">
+               <Link to="/" className="nav-link active">
                  Home
-                 <span className="visually-hidden">(current)</span>
-               </a>
+               </Link>
              </li>
              <li className="nav-item">
-               <a className="nav-link" href="#">
-                 Features
-               </a>
+               <Link className="nav-link" to="/orders">
+                 Orders
+               </Link>
              </li>
              <li className="nav-item">
-               <a className="nav-link" href="#">
-                 Pricing
-               </a>
-             </li>
-             <li className="nav-item">
-               <a className="nav-link" href="#">
-                 About
-               </a>
+               <Link className="nav-link" to="/search">
+                 Search
+               </Link>
              </li>
            </ul>
          </div>

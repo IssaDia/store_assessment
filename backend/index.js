@@ -33,7 +33,7 @@ app.get("/api/products", async (req, res) => {
 
 app.post("/api/order/new", async (req, res) => {
   const newOrder = Order(req.body);
-  console.log(newOrder);
+ 
   const savedOrder = await newOrder.save()
   res.send(savedOrder);
 });
@@ -42,6 +42,19 @@ app.post("/api/product/new", async (req, res) => {
   const newProduct = Product(req.body);
   const savedProduct = await newProduct.save();
   res.send(savedProduct);
+});
+
+app.put("/api/update/:id", async (req, res) => {
+  const id = req.params.id
+  console.log(id);
+  // Order.findByIdAndUpdate(id , {status : req.body}, (err, docs) => {
+  //    if (err) {
+  //      console.log(err);
+  //    } else {
+  //      console.log("Updated User : ", docs);
+  //    }
+  // })
+  
 });
 
 app.listen(port, () => {
