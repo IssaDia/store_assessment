@@ -1,6 +1,8 @@
+import { ProductInterface } from "./ProductInterface";
+
 export interface OrderInterface {
-  date: Date;
   id: string;
-  items: any;
+  date: Date;
+  orderItems: ProductInterface[];
   status: string;
 };
