@@ -11,10 +11,11 @@ const OrderSchema = new Schema({
   orderItems: [
     {
       type: Schema.Types.ObjectId,
-      ref: "Product",
+      ref: "Item",
     },
   ],
   status: { type: String, default: "Pending approval" },
+  
 });
 const Order = mongoose.model("Order", OrderSchema);
 

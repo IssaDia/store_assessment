@@ -2,13 +2,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { Status } from "../lib/enums/Order";
 import { OrderInterface } from "../lib/interfaces/OrderInterface";
-import { ProductInterface } from "../lib/interfaces/ProductInterface";
+import { ItemInterface } from "../lib/interfaces/ItemInterface";
 import { cartSelector } from "../redux";
 import { useAddOrderMutation } from "../services/OrderApi";
-import { useGetProductsQuery } from "../services/ProductsApi";
+import { useGetItemsQuery } from "../services/ItemsApi";
 
 function Home() {
-  const { data: products, isSuccess } = useGetProductsQuery();
+  const { data: items, isSuccess } = useGetItemsQuery();
 
   const orderItems = useSelector(cartSelector);
 
@@ -27,23 +27,23 @@ function Home() {
   return (
     <><div className="flex align-center">
 
-      <h1>ProductList</h1>
+      <h1>Items List</h1>
     </div>
       <div className="content flex flex-row">
         <div className="main w-3/4">
-          <div className="products grid grid-cols-3 gap-x-8 gap-y-4">
+          <div className="items grid grid-cols-3 gap-x-8 gap-y-4">
             {isSuccess &&
-              products.map((product: ProductInterface, index: number) => {
+              items.map((item: ItemInterface, index: number) => {
                 return (
                   <div key={index}>
-                    {/* <p>{product.name}</p>
+                    {/* <p>{item.name}</p>
                     <button
                       type="button"
                       className="btn btn-primary"
                       onClick={() =>
                         dispatch({
                           type: "cart/addToCart",
-                          payload: product,
+                          payload: item,
                         })
                       }
                     >
@@ -53,13 +53,13 @@ function Home() {
                       <div className="max-w-sm overflow-hidden rounded-xl bg-white shadow-md">
                         <div className="p-5">
                           <p className="text-medium mb-5 text-gray-700">
-                            {product.name}
+                            {item.name}
                           </p>
                           <button
                             onClick={() =>
                               dispatch({
                                 type: "cart/addToCart",
-                                payload: product,
+                                payload: item,
                               })
                             }
                             className="w-full btn btn-primary"
@@ -81,7 +81,7 @@ function Home() {
           ) : (
             <>
               <div> You have {orderItems.length} elements in your order</div>
-              {orderItems.map((item: ProductInterface, index: number) => {
+              {orderItems.map((item: ItemInterface, index: number) => {
                 return (
                   <div className="flex flex-row" key={index}>
                     <div>{item.name}</div>

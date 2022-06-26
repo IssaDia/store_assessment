@@ -1,4 +1,4 @@
-export interface ProductInterface {
+export interface ItemInterface {
   code: number;
   name: string;
   quantity: number;

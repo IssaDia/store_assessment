@@ -1,9 +1,9 @@
-import { ProductInterface } from "./ProductInterface";
+import { ItemInterface } from "./ItemInterface";
 import {Status} from "../enums/Order"
 
 export interface OrderInterface {
   _id : string,
   date: Date;
-  orderItems: ProductInterface[];
+  orderItems: ItemInterface[];
   status: string;
 };
