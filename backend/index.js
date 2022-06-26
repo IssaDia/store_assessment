@@ -46,14 +46,14 @@ app.post("/api/product/new", async (req, res) => {
 
 app.put("/api/update/:id", async (req, res) => {
   const id = req.params.id
-  console.log(id);
-  // Order.findByIdAndUpdate(id , {status : req.body}, (err, docs) => {
-  //    if (err) {
-  //      console.log(err);
-  //    } else {
-  //      console.log("Updated User : ", docs);
-  //    }
-  // })
+  console.log("status",req.body.status);
+  Order.findByIdAndUpdate(id , {status : req.body.status}, (err, docs) => {
+     if (err) {
+       console.log(err);
+     } else {
+       console.log("Updated User : ", docs);
+     }
+  })
   
 });
 

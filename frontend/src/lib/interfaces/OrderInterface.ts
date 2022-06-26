@@ -5,5 +5,5 @@ export interface OrderInterface {
   _id : string,
   date: Date;
   orderItems: ProductInterface[];
-  status: Status.PendingA | Status.PendingR | Status.Received | Status.Rejected;
+  status: string;
 };

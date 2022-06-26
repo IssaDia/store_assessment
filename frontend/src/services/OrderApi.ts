@@ -14,7 +14,10 @@ const orderApi = createApi({
         body: order,
       }),
     }),
-    updateOrder: builder.mutation<OrderInterface, Partial<OrderInterface>>({
+    updateOrder: builder.mutation<
+      OrderInterface,
+      Partial<OrderInterface> & Pick<OrderInterface, "_id">
+    >({
       query: ({ _id, ...rest }) => ({
         url: `/api/update/${_id}`,
         method: "PUT",
