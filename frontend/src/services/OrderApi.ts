@@ -11,13 +11,29 @@ const orderApi = createApi({
       query: (order) => ({
         url: `/api/order/new`,
         method: "POST",
-        order,
+        body: order,
       }),
+    }),
+    updateOrder: builder.mutation<
+      OrderInterface,
+      Partial<OrderInterface> & Pick<OrderInterface, "_id">
+    >({
+      query: ({ _id, ...rest }) => ({
+        url: `/api/update/${_id}`,
+        method: "PUT",
+        body: rest,
+      }),
+    }),
+    getOrders: builder.query<OrderInterface[], void>({
+      query: () => `/api/orders`,
     }),
   }),
 });
 
-export const { useAddOrderMutation } = orderApi;
+export const {
+  useAddOrderMutation,
+  useGetOrdersQuery,
+  useUpdateOrderMutation,
+} = orderApi;
 
 export default orderApi;
-
