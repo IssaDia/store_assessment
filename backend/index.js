@@ -23,6 +23,7 @@ app.use(cors());
 
 app.get("/api/orders", async (req, res) => {
   await Order.find({})
+    .populate("orderItems")
     .then((docs) => {
       res.json(docs);
     })
@@ -46,18 +47,13 @@ app.get("/api/lots", async (req, res) => {
 });
 
 app.post("/api/order/new", async (req, res) => {
-  const newOrder = Order(req.body);
+  // const newOrder = Order(req.body);
 
-  await newOrder
-    .save()
-    .then((docs) => {
-      res.json(docs);
-    })
-    .catch((err) => console.log(err));
+  console.log(Object.keys(orderItemsIds));
+ 
 });
 
 app.post("/api/item/new", async (req, res) => {
-  console.log(req.body.lots);
   const newItem = Item({
     name: req.body.name,
     quantity: req.body.quantity,

@@ -10,6 +10,9 @@ import { useGetItemsQuery } from "../services/ItemsApi";
 function Home() {
   const { data: items, isSuccess } = useGetItemsQuery();
 
+  console.log(items);
+  
+
   const orderItems = useSelector(cartSelector);
 
   const dispatch = useDispatch();
@@ -25,10 +28,10 @@ function Home() {
     await addOrder(order);
   };
   return (
-    <><div className="flex align-center">
-
-      <h1>Items List</h1>
-    </div>
+    <>
+      <div className="flex align-center">
+        <h1>Items List</h1>
+      </div>
       <div className="content flex flex-row">
         <div className="main w-3/4">
           <div className="items grid grid-cols-3 gap-x-8 gap-y-4">
@@ -36,19 +39,6 @@ function Home() {
               items.map((item: ItemInterface, index: number) => {
                 return (
                   <div key={index}>
-                    {/* <p>{item.name}</p>
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      onClick={() =>
-                        dispatch({
-                          type: "cart/addToCart",
-                          payload: item,
-                        })
-                      }
-                    >
-                      Add to order
-                    </button> */}
                     <div className="flex items-center justify-center">
                       <div className="max-w-sm overflow-hidden rounded-xl bg-white shadow-md">
                         <div className="p-5">
@@ -66,7 +56,6 @@ function Home() {
                           >
                             Add to cart
                           </button>
-                        
                         </div>
                       </div>
                     </div>
@@ -85,7 +74,7 @@ function Home() {
                 return (
                   <div className="flex flex-row" key={index}>
                     <div>{item.name}</div>
-                    <span> x {item.count}</span>
+                    <span> x {item.quantity}</span>
                     <button
                       className="btn btn-primary"
                       onClick={() =>
@@ -100,10 +89,7 @@ function Home() {
                   </div>
                 );
               })}
-              <button
-                className="btn btn-warning"
-                onClick={addHandler}
-              >
+              <button className="btn btn-warning" onClick={addHandler}>
                 Pass your order
               </button>
             </>

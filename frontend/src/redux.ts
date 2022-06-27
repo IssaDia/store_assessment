@@ -17,12 +17,12 @@ const cartSlice = createSlice({
       let alreadyInCart = false;
       state.forEach((item: ItemInterface) => {
         if (item.code === action.payload.code) {
-          item.count++;
+          item.quantity++;
           alreadyInCart = true;
         }
       });
       if (!alreadyInCart) {
-        state.push({ ...item, count: 1 });
+        state.push({ ...item, quantity: 1 });
         console.log("success");
       }
       localStorage.setItem("cartItems", JSON.stringify(state));

@@ -11,6 +11,13 @@ function Orders() {
   const { data: orders, isSuccess } = useGetOrdersQuery();
   const [updateOrder] = useUpdateOrderMutation();
 
+  const items = orders
+
+  console.log(orders);
+
+
+  
+
   const updateHandler = async (
     _id: string,
     e: ChangeEvent<HTMLSelectElement>
@@ -67,6 +74,11 @@ function Orders() {
                   <>
                     <td>{order._id}</td>
                     <td>{index + 1}</td>
+                    {order.orderItems.map((item, index) => {
+                      return (
+                        <td>{item.name}</td>
+                      )
+                    })}
                   </>
                 );
               })}
