@@ -24,28 +24,30 @@ A fullstack application which manage a store. Configured it with ViteJs, ReactJs
 ## Goal
 
 A retail store would like to have a simple website to store and view the purchasing information for stock management.
- 
+
 The retail store has provided business rules for the web development:
+
 - A purchase order has one or multiple items
   - An item in a purchase order has one or multiple unique inventory lot number
   - A purchase order has four status, which are:
-      - Pending Approval - the initial state, where it requires approval from other employee
-      - Pending receive - once approved, will be on this state
-      - Received - when item arrived, will mark purchase order as received
-      - Rejected - when other employee rejected the purchase order
+    - Pending Approval - the initial state, where it requires approval from other employee
+    - Pending receive - once approved, will be on this state
+    - Received - when item arrived, will mark purchase order as received
+    - Rejected - when other employee rejected the purchase order
 - The inventory lot number is not known until the item is received
 - The sum of item quantities of all inventory lot numbers should match the related item in purchase order.
   - Example: for purchase order, “PO1” has 40 items, “itemA”.
   - The sum of all inventory lot number quantities for “itemA” in “PO1” should be 40
   - Example of valid inventory lot numbers:
-      - itemA-lot1 quantity = 20
-      - itemA-lot2 quantity = 14
-      - itemA-lot3 quantity = 6
+    - itemA-lot1 quantity = 20
+    - itemA-lot2 quantity = 14
+    - itemA-lot3 quantity = 6
 - A purchase order must have the following information:
+
   - Create Date
   - Unique Identifier (ID)
   - Status
- 
+
 - A purchase order item must have the following information:
   - Item code
   - Item name
@@ -53,27 +55,26 @@ The retail store has provided business rules for the web development:
 - A inventory lot number must have the following information:
   - Lot number
   - Quantity
- 
+
 The website must have the following pages/features for inventory management:
+
 - Create purchase order
 - View purchase order
 - Enter inventory lot number
 - View entered inventory lot number
 - One click button to update to appropriate status
- 
-You may store the data in any medium (such as database), as long as it could be retrieved when a user re-visit the website.
 
+You may store the data in any medium (such as database), as long as it could be retrieved when a user re-visit the website.
 
 ## Methodology
 
 I chose to executes elements of CRUD one by one then adapt to the challenge.
 
-
 ## 🏗 Built with
 
 - [Node](https://nodejs.org/en/)
 - [Express](https://expressjs.com/)
-- [ViteJs]([https://cli.vuejs.org/guide/creating-a-project.html](https://vitejs.dev/))
+- [ViteJs](<[https://cli.vuejs.org/guide/creating-a-project.html](https://vitejs.dev/)>)
 - [Typescript](https://fr.vuejs.org/v2/guide/typescript.html)
 - [Tailwind CSS](https://tailwindcss.com/docs/guides/vite)
 - [React](https://fr.reactjs.org/)
@@ -99,16 +100,16 @@ I chose to go with React and Redux because I did projects with these two technol
 Articles :
 
 INTRODUCTION A REDUX TOOLKIT DANS REACT
- : https://www.youtube.com/watch?v=1lvnT2oE0_4
+: https://www.youtube.com/watch?v=1lvnT2oE0_4
 
 Videos :
 
 React & Redux Tutorial - Full Shopping Cart in 4 Hours [2022]
- : https://www.youtube.com/watch?v=nKyrXWH5XLM
+: https://www.youtube.com/watch?v=nKyrXWH5XLM
 
 ## Biggest challenges for this project
 
-- Manage the right Model for the Product Items
+- Manage the right Model for the Items
 - Lear redux toolkit with createApi and mutations
 - find the right Types with Typescript
 
@@ -140,6 +141,7 @@ To install all the node_modules packages:
 ```
 npm install or npm i
 ```
+
 on both /frontend and /backend folders
 
 ### ♻️ Run on Front End
@@ -172,6 +174,4 @@ To run tests:
 npm run test
 ```
 
-
 ## 📑 To improve
-

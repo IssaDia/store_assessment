@@ -1,8 +1,8 @@
 import { createSlice, configureStore, PayloadAction } from "@reduxjs/toolkit";
 import { v4 as uuid } from "uuid";
-import { ProductInterface } from "./lib/interfaces/ProductInterface";
+import { ItemInterface } from "./lib/interfaces/ItemInterface";
 import { OrderInterface } from "./lib/interfaces/OrderInterface";
-import productApi from "./services/ProductsApi";
+import itemApi from "./services/ItemsApi";
 import orderApi from "./services/OrderApi";
 
 const cartSlice = createSlice({
@@ -10,24 +10,24 @@ const cartSlice = createSlice({
   initialState: [],
   reducers: {
     addToCart: (
-      state: ProductInterface[],
-      action: PayloadAction<ProductInterface>
+      state: ItemInterface[],
+      action: PayloadAction<ItemInterface>
     ) => {
-      const { payload: product } = action;
+      const { payload: item } = action;
       let alreadyInCart = false;
-      state.forEach((item: ProductInterface) => {
+      state.forEach((item: ItemInterface) => {
         if (item.code === action.payload.code) {
-          item.count++;
+          item.quantity++;
           alreadyInCart = true;
         }
       });
       if (!alreadyInCart) {
-        state.push({ ...product, count: 1 });
+        state.push({ ...item, quantity: 1 });
         console.log("success");
       }
       localStorage.setItem("cartItems", JSON.stringify(state));
     },
-    removeFromCart: (state: ProductInterface[], action) => {
+    removeFromCart: (state: ItemInterface[], action) => {
       state = state.filter((item) => item.code !== action.payload);
       localStorage.setItem(
         "cart",
@@ -41,9 +41,9 @@ const cartSlice = createSlice({
 export const store = configureStore({
   reducer: {
     cart: cartSlice.reducer,
-    [productApi.reducerPath]: productApi.reducer,
+    [itemApi.reducerPath]: itemApi.reducer,
     [orderApi.reducerPath]: orderApi.reducer,
   },
 });
 
-export const cartSelector = (state: { cart: ProductInterface[] }) => state.cart;
+export const cartSelector = (state: { cart: ItemInterface[] }) => state.cart;

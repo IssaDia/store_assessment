@@ -1,7 +1,7 @@
 import React from 'react'
-import { ProductInterface } from '../../lib/interfaces/ProductInterface'
+import { ItemInterface } from '../../lib/interfaces/ItemInterface'
 
-function Cart(orderItems: ProductInterface[]) {
+function Cart(orderItems: ItemInterface[]) {
   return (<>
   </>)
 }

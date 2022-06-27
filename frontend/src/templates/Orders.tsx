@@ -1,23 +1,34 @@
-import { useGetOrdersQuery, useUpdateOrderMutation } from "../services/OrderApi";
-import  moment  from "moment";
+import {
+  useGetOrdersQuery,
+  useUpdateOrderMutation,
+} from "../services/OrderApi";
+import moment from "moment";
 import { ChangeEvent } from "react";
 import { OrderInterface } from "../lib/interfaces/OrderInterface";
-import { Status } from '../lib/enums/Order';
+import { Status } from "../lib/enums/Order";
 
 function Orders() {
   const { data: orders, isSuccess } = useGetOrdersQuery();
   const [updateOrder] = useUpdateOrderMutation();
 
- const updateHandler = async (
-   _id: string,
-   e: ChangeEvent<HTMLSelectElement>
- ) => {
-   e.preventDefault();
-   console.log(e.target.value);
-   const status = e.target.value as string;
+  const items = orders
 
-   await updateOrder({ _id, status } as Partial<OrderInterface> & Pick<OrderInterface, "_id">);
- };
+  console.log(orders);
+
+
+  
+
+  const updateHandler = async (
+    _id: string,
+    e: ChangeEvent<HTMLSelectElement>
+  ) => {
+    e.preventDefault();
+    console.log(e.target.value);
+    const status = e.target.value as string;
+
+    await updateOrder({ _id, status } as Partial<OrderInterface> &
+      Pick<OrderInterface, "_id">);
+  };
 
   return (
     <div className="w-full flex flex-col">
@@ -43,6 +54,43 @@ function Orders() {
             </div>
           );
         })}
+      <table className="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Purchase Order</th>
+            <th scope="col">Line number</th>
+            <th scope="col">Item</th>
+            <th scope="col">Line quantity</th>
+            <th scope="col">Inventory Lot Number </th>
+            <th scope="col">Lot Number Quantity</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className="table-success">
+            {isSuccess &&
+              orders.map((order, index) => {
+                return (
+                  <>
+                    <td>{order._id}</td>
+                    <td>{index + 1}</td>
+                    {order.orderItems.map((item, index) => {
+                      return (
+                        <td>{item.name}</td>
+                      )
+                    })}
+                  </>
+                );
+              })}
+          </tr>
+          {/* <tr className="table-danger">
+            <th scope="row">Danger</th>
+            <td>Column content</td>
+            <td>Column content</td>
+            <td>Column content</td>
+          </tr> */}
+        </tbody>
+      </table>
     </div>
   );
 }
