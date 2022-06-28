@@ -6,14 +6,13 @@ import { ItemInterface } from "../lib/interfaces/ItemInterface";
 import { cartSelector } from "../redux";
 import { useAddOrderMutation } from "../services/OrderApi";
 import { useGetItemsQuery } from "../services/ItemsApi";
+import { useState } from "react";
+import { dummyItems } from "../lib/data/DummyItems";
 
 function Home() {
   const { data: items, isSuccess } = useGetItemsQuery();
 
-  console.log(items);
-  
-
-  const orderItems = useSelector(cartSelector);
+  const orderedItems = useSelector(cartSelector);
 
   const dispatch = useDispatch();
 
@@ -22,14 +21,20 @@ function Home() {
     const order: OrderInterface = {
       _id: uuidv4(),
       date: new Date(),
-      orderItems: orderItems,
+      orderItems: orderedItems,
       status: Status.PendingA,
     };
+
     await addOrder(order);
+    dispatch({
+      type: "order/addToOrder",
+      payload: order,
+    });
+    localStorage.setItem("cartItems", "");
   };
   return (
     <>
-      <div className="flex align-center">
+      <div className="flex justify-center my-4">
         <h1>Items List</h1>
       </div>
       <div className="content flex flex-row">
@@ -65,16 +70,16 @@ function Home() {
           </div>
         </div>
         <div className="sidebar w-1/4">
-          {orderItems.length === 0 ? (
+          {orderedItems.length === 0 ? (
             <div>Cart is empty</div>
           ) : (
             <>
-              <div> You have {orderItems.length} elements in your order</div>
-              {orderItems.map((item: ItemInterface, index: number) => {
+              <div> You have {orderedItems.length} elements in your order</div>
+              {orderedItems.map((item: ItemInterface, index: number) => {
                 return (
-                  <div className="flex flex-row" key={index}>
-                    <div>{item.name}</div>
-                    <span> x {item.quantity}</span>
+                  <div className="flex flex-row my-4" key={index}>
+                    <p>{item.name}</p>
+                    <span className="mr-4"> x {item.quantity}</span>
                     <button
                       className="btn btn-primary"
                       onClick={() =>
