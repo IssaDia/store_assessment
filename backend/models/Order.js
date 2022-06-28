@@ -12,6 +12,7 @@ const OrderSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: "Item",
+      quantity: Number
     },
   ],
   status: { type: String, default: "Pending approval" },

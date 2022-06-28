@@ -23,7 +23,10 @@ app.use(cors());
 
 app.get("/api/orders", async (req, res) => {
   await Order.find({})
-    .populate("orderItems")
+    .populate({
+      path: "orderItems",
+      populate: { path: "lots", model: "Lot" },
+    })
     .then((docs) => {
       res.json(docs);
     })
@@ -47,10 +50,26 @@ app.get("/api/lots", async (req, res) => {
 });
 
 app.post("/api/order/new", async (req, res) => {
-  // const newOrder = Order(req.body);
+  const newOrder = Order(req.body);
+  const savedOrder = await newOrder.save();
 
-  console.log(Object.keys(orderItemsIds));
- 
+  const objectToUpdate = [];
+  req.body.orderItems.map((item) => {
+    objectToUpdate.push({ "_id": item._id, quantity: item.quantity });
+  });
+
+  let bulkArr = [];
+  for (const i of objectToUpdate) {
+    bulkArr.push({
+      updateOne: {
+        filter: { _id: mongoose.Types.ObjectId(i._id) },
+        update: { $set: { quantity: i.quantity } },
+      },
+    });
+  }
+  Item.bulkWrite(bulkArr);
+
+  res.send(savedOrder);
 });
 
 app.post("/api/item/new", async (req, res) => {

@@ -8,7 +8,7 @@ const ItemSchema = new Schema({
     default: shortid.generate,
   },
   name: String,
-  quantity: Number,
+  quantity : Number,
   lots: [
     {
       type: Schema.Types.ObjectId,

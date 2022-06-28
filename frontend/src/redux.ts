@@ -7,7 +7,7 @@ import orderApi from "./services/OrderApi";
 
 const cartSlice = createSlice({
   name: "cart",
-  initialState: [],
+  initialState: JSON.parse(localStorage.getItem("cartItems") || "{}"),
   reducers: {
     addToCart: (
       state: ItemInterface[],
@@ -23,14 +23,15 @@ const cartSlice = createSlice({
       });
       if (!alreadyInCart) {
         state.push({ ...item, quantity: 1 });
-        console.log("success");
       }
+
       localStorage.setItem("cartItems", JSON.stringify(state));
+      return state;
     },
     removeFromCart: (state: ItemInterface[], action) => {
       state = state.filter((item) => item.code !== action.payload);
       localStorage.setItem(
-        "cart",
+        "cartItems",
         JSON.stringify(state.filter((item) => item.code !== action.payload))
       );
       return state;
@@ -38,12 +39,39 @@ const cartSlice = createSlice({
   },
 });
 
-export const store = configureStore({
-  reducer: {
-    cart: cartSlice.reducer,
-    [itemApi.reducerPath]: itemApi.reducer,
-    [orderApi.reducerPath]: orderApi.reducer,
+const orderSlice = createSlice({
+  name: "order",
+  initialState: [],
+  reducers: {
+    addToOrder: (
+      state: OrderInterface[],
+      action: PayloadAction<OrderInterface>
+    ) => {
+      const { payload: order } = action;
+      let alreadyInCart = false;
+      state.forEach((order: OrderInterface) => {
+        if (order._id === action.payload._id) {
+          alreadyInCart = true;
+        }
+      });
+      if (!alreadyInCart) {
+        state.push({ ...order });
+      }
+      localStorage.setItem("orders", JSON.stringify(state));
+    },
   },
 });
 
+export const store = configureStore({
+  reducer: {
+    cart: cartSlice.reducer,
+    order: orderSlice.reducer,
+    [itemApi.reducerPath]: itemApi.reducer,
+    [orderApi.reducerPath]: orderApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+});
+
 export const cartSelector = (state: { cart: ItemInterface[] }) => state.cart;
+export const orderSelector = (state: { order: OrderInterface[] }) =>
+  state.order;
