@@ -15,6 +15,7 @@ const ItemSchema = new Schema({
       ref: "Lot",
     },
   ],
+  totalLots: Number
 });
 const Item = mongoose.model("Item", ItemSchema);
 

@@ -5,4 +5,5 @@ export interface ItemInterface {
   name: string;
   quantity: number;
   lots: LotInterface[];
+  totalLots: number
 }

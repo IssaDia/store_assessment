@@ -6,4 +6,5 @@ export interface OrderInterface {
   date: Date;
   orderItems: ItemInterface[];
   status: string;
+  total : Number
 };

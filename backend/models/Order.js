@@ -16,6 +16,7 @@ const OrderSchema = new Schema({
     },
   ],
   status: { type: String, default: "Pending approval" },
+  total: Number
   
 });
 const Order = mongoose.model("Order", OrderSchema);

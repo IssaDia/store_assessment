@@ -7,7 +7,7 @@ import orderApi from "./services/OrderApi";
 
 const cartSlice = createSlice({
   name: "cart",
-  initialState: JSON.parse(localStorage.getItem("cartItems") || "{}"),
+  initialState: [],
   reducers: {
     addToCart: (
       state: ItemInterface[],
@@ -26,7 +26,7 @@ const cartSlice = createSlice({
       }
 
       localStorage.setItem("cartItems", JSON.stringify(state));
-      return state;
+      
     },
     removeFromCart: (state: ItemInterface[], action) => {
       state = state.filter((item) => item.code !== action.payload);
