@@ -79,6 +79,8 @@ I chose to executes elements of CRUD one by one then adapt to the challenge.
 - [Tailwind CSS](https://tailwindcss.com/docs/guides/vite)
 - [React](https://fr.reactjs.org/)
 - [Redux Toolkit](https://redux-toolkit.js.org/)
+
+Soon : 
 - [Jest](https://github.com/vuejs/vue-jest)
 - [Supertest](https://www.npmjs.com/package/supertest)
 
@@ -97,20 +99,15 @@ I chose to go with React and Redux because I did projects with these two technol
 
 ## Technical watch
 
-Articles :
+Videos :
 
 INTRODUCTION A REDUX TOOLKIT DANS REACT
 : https://www.youtube.com/watch?v=1lvnT2oE0_4
 
-Videos :
-
-React & Redux Tutorial - Full Shopping Cart in 4 Hours [2022]
-: https://www.youtube.com/watch?v=nKyrXWH5XLM
-
 ## Biggest challenges for this project
 
-- Manage the right Model for the Items
-- Lear redux toolkit with createApi and mutations
+- Manage the right Model for the Items (implement lot items)
+- Learn redux toolkit with createApi and mutations
 - find the right Types with Typescript
 
 ## Feedback
@@ -156,6 +153,12 @@ npm run dev
 
 then go to : http://localhost:8080/
 
+For now you have to add manually the items 
+
+Got to Postman and enter url : http://localhost:8000/api/item/new
+
+make a POST request with each item you find in /frontend/data/DummyItems.tsx
+
 ### ♻️ Run on Back End
 
 To run on Development mode:
@@ -181,3 +184,10 @@ npm run test
 ```
 
 ## 📑 To improve
+
+- Create smaller components when fixing Intrisicate attibutes error
+- Allow to create Products with associated lot items
+- Better UI
+- Better file disposition and architecture on frontend and backend
+- Fix the bug that changes quantity of Items after each order
+
