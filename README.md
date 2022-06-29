@@ -172,9 +172,11 @@ npm run serve
 change .env.exemple file to .env and complete the file with your mongoDB api key : 
 
 ```
-MONGO_DB_URI=mongodb+srv://<username>:<password>@mycluster.lgurr.mongodb.net/<databaseName>?retryWrites=true&w=majority```
+MONGO_DB_URI=mongodb+srv://<username>:<password>@mycluster.lgurr.mongodb.net/<databaseName>?retryWrites=true&w=majority
+```
 
 No tests for now but later: 
+
 ### 🧪 Run Tests
 
 To run tests:
