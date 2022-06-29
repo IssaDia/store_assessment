@@ -157,7 +157,7 @@ For now you have to add manually the items
 
 Got to Postman and enter url : http://localhost:8000/api/item/new
 
-make a POST request with each item you find in /frontend/data/DummyItems.tsx
+make a single POST request for each item you find in /frontend/data/DummyItems.tsx
 
 ### ♻️ Run on Back End
 
