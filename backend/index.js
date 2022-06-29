@@ -55,7 +55,7 @@ app.post("/api/order/new", async (req, res) => {
 
   const objectToUpdate = [];
   req.body.orderItems.map((item) => {
-    objectToUpdate.push({ "_id": item._id, quantity: item.quantity });
+    objectToUpdate.push({ _id: item._id, quantity: item.quantity });
   });
 
   let bulkArr = [];
@@ -73,17 +73,38 @@ app.post("/api/order/new", async (req, res) => {
 });
 
 app.post("/api/item/new", async (req, res) => {
-  const newItem = Item({
-    name: req.body.name,
-    quantity: req.body.quantity,
-    lots: req.body.lots,
+  let lotIds = [];
+  req.body.lots.map((lot) => {
+    lotIds.push(mongoose.Types.ObjectId(lot));
   });
-  await newItem
-    .save()
-    .then((docs) => {
-      res.json(docs);
-    })
-    .catch((err) => console.log(err));
+
+  console.log(lotIds);
+  let totalLots = 0;
+
+  await Lot.find({ _id: { $in: lotIds } }, async (err, docs) => {
+    if (err) {
+      console.log(err);
+    } else {
+      docs.forEach((doc) => {
+        totalLots += doc.quantity;
+      });
+      
+      const newItem = Item({
+        name: req.body.name,
+        quantity: req.body.quantity,
+        lots: req.body.lots,
+        totalLots: totalLots,
+      });
+      await newItem
+        .save()
+        .then((docs) => {
+          res.json(docs);
+        })
+        .catch((err) => console.log(err));
+    }
+  });
+
+  console.log(totalLots);
 });
 
 app.post("/api/lot/new", async (req, res) => {

@@ -1,6 +1,6 @@
 export const dummyItems = [
   {
-    "name": "Item H",
+    "name": "Item A",
     "quantity": 0,
     "lots": ["62b83a7708684c809955308b", "62b83a8a08684c809955308d"]
   },

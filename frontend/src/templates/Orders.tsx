@@ -11,6 +11,9 @@ function Orders() {
   const { data: orders, isSuccess } = useGetOrdersQuery();
   const [updateOrder] = useUpdateOrderMutation();
 
+  console.log(orders);
+  
+
   const updateHandler = async (
     _id: string,
     e: ChangeEvent<HTMLSelectElement>
@@ -35,11 +38,16 @@ function Orders() {
                 Order number
                 <span className="font-bold"> {order._id}</span>
               </p>
+              <p>
+                total of items ordered : <span>{order.total.toString()}</span>
+              </p>
+
               {order.orderItems.map((item, index) => {
                 return (
                   <>
                     <p className="underline">{item.name}</p>
-                    <p>Quantity : {item.quantity}</p>
+                    <p>Quantity : <span className={`font-bold ${item.totalLots !== item.quantity ? "text-red-500" : "text-green-500"}`}>{item.quantity}</span></p>
+                    <p>{item.quantity}</p>
                     <div className="flex flex-row">
                       {item.lots.map((lot: LotInterface, index) => {
                         return (
@@ -48,7 +56,7 @@ function Orders() {
                               - Lot :{" "}
                               <span className="font-bold">{lot.name} </span>
                               Stock Quantity{" "}
-                              <span className="font-bold">{lot.quantity} </span>
+                              <span className="">{lot.quantity}</span>
                             </p>
                           </div>
                         );
@@ -57,13 +65,15 @@ function Orders() {
                   </>
                 );
               })}
-              <p>
-                Order date :{" "}
-                <span className="font-bold">
-                  {" "}
-                  {moment(order.date).format("dddd, MMMM Do YYYY")}
-                </span>
-              </p>
+              <>
+                <p>
+                  Order date :{" "}
+                  <span className="font-bold">
+                    {" "}
+                    {moment(order.date).format("dddd, MMMM Do YYYY")}
+                  </span>
+                </p>
+              </>
 
               <form action="">
                 <label htmlFor="status">Order status:</label>

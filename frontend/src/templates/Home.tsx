@@ -14,6 +14,8 @@ function Home() {
 
   const orderedItems = useSelector(cartSelector);
 
+console.log(orderedItems);
+
   const dispatch = useDispatch();
 
   const [addOrder] = useAddOrderMutation();
@@ -23,6 +25,7 @@ function Home() {
       date: new Date(),
       orderItems: orderedItems,
       status: Status.PendingA,
+      total : orderedItems.reduce((a, c) => a + c.quantity, 0)
     };
 
     await addOrder(order);
