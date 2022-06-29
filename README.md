@@ -95,7 +95,7 @@ Soon :
 
 ## Why this choice?
 
-I chose to go with React and Redux because I did projects with these two technologies and I feeled it was the right tools for that challenge.
+I chose to go with React and Redux because I did projects with these two technologies and I felt it was the right tools for that challenge.
 
 ## Technical watch
 
