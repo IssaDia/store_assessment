@@ -74,7 +74,7 @@ I chose to executes elements of CRUD one by one then adapt to the challenge.
 
 - [Node](https://nodejs.org/en/)
 - [Express](https://expressjs.com/)
-- [ViteJs](<[https://cli.vuejs.org/guide/creating-a-project.html](https://vitejs.dev/)>)
+- [ViteJs](https://cli.vuejs.org/guide/creating-a-project.html](https://vitejs.dev/)
 - [Typescript](https://fr.vuejs.org/v2/guide/typescript.html)
 - [Tailwind CSS](https://tailwindcss.com/docs/guides/vite)
 - [React](https://fr.reactjs.org/)
@@ -95,7 +95,7 @@ Soon :
 
 ## Why this choice?
 
-I chose to go with React and Redux because I did projects with these two technologies and I feeled it was the right tools for that challenge.
+I chose to go with React and Redux because I did projects with these two technologies and I felt it was the right tools for that challenge.
 
 ## Technical watch
 
@@ -157,7 +157,7 @@ For now you have to add manually the items
 
 Got to Postman and enter url : http://localhost:8000/api/item/new
 
-make a POST request with each item you find in /frontend/data/DummyItems.tsx
+make a single POST request for each item you find in /frontend/data/DummyItems.tsx
 
 ### ♻️ Run on Back End
 
@@ -187,6 +187,7 @@ npm run test
 
 ## 📑 To improve
 
+- Use SQL architecture model to handle better the application needs
 - Create smaller components when fixing Intrisicate attibutes error
 - Allow to create Products with associated lot items
 - Better UI
