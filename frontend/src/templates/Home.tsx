@@ -39,7 +39,7 @@ function Home() {
       type: "order/addToOrder",
       payload: order,
     });
-    localStorage.setItem("cartItems", "");
+    localStorage.clear();
   };
   return (
     <>
