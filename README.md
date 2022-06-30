@@ -187,6 +187,7 @@ npm run test
 
 ## 📑 To improve
 
+- Use SQL architecture model to handle better the application needs
 - Create smaller components when fixing Intrisicate attibutes error
 - Allow to create Products with associated lot items
 - Better UI
