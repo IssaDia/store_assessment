@@ -12,18 +12,15 @@ import { dummyItems } from "../lib/data/DummyItems";
 function Home() {
   const { data: items, isSuccess } = useGetItemsQuery();
 
-  const orderedItems = useSelector(cartSelector);
-const [cartItems, setCartItems] = useState(orderedItems);
+  const cartItemsFromRedux = useSelector(cartSelector);
+  const [cartItems, setCartItems] = useState(cartItemsFromRedux);
 
-
-useEffect(() => {
-  const items = JSON.parse(localStorage.getItem("cartItems") || "[]");
-  if (items) {
-    setCartItems(items);
-  }
-}, [orderedItems]);
-
-
+  useEffect(() => {
+    const items = JSON.parse(localStorage.getItem("cartItems") || "[]");
+    if (items) {
+      setCartItems(items);
+    }
+  }, [cartItemsFromRedux]);
 
   const dispatch = useDispatch();
 
@@ -34,7 +31,7 @@ useEffect(() => {
       date: new Date(),
       orderItems: cartItems,
       status: Status.PendingA,
-      total : cartItems.reduce((a, c) => a + c.quantity, 0)
+      total: cartItems.reduce((a, c) => a + c.quantity, 0),
     };
 
     await addOrder(order);
