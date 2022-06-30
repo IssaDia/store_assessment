@@ -59,6 +59,7 @@ function Orders() {
                               <span className="">{lot.quantity}</span>
                             </p>
                           </div>
+                         
                         );
                       })}
                     </div>

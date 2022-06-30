@@ -6,15 +6,24 @@ import { ItemInterface } from "../lib/interfaces/ItemInterface";
 import { cartSelector } from "../redux";
 import { useAddOrderMutation } from "../services/OrderApi";
 import { useGetItemsQuery } from "../services/ItemsApi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { dummyItems } from "../lib/data/DummyItems";
 
 function Home() {
   const { data: items, isSuccess } = useGetItemsQuery();
 
   const orderedItems = useSelector(cartSelector);
+const [cartItems, setCartItems] = useState(orderedItems);
 
-console.log(orderedItems);
+
+useEffect(() => {
+  const items = JSON.parse(localStorage.getItem("cartItems") || "[]");
+  if (items) {
+    setCartItems(items);
+  }
+}, [orderedItems]);
+
+
 
   const dispatch = useDispatch();
 
@@ -23,9 +32,9 @@ console.log(orderedItems);
     const order: OrderInterface = {
       _id: uuidv4(),
       date: new Date(),
-      orderItems: orderedItems,
+      orderItems: cartItems,
       status: Status.PendingA,
-      total : orderedItems.reduce((a, c) => a + c.quantity, 0)
+      total : cartItems.reduce((a, c) => a + c.quantity, 0)
     };
 
     await addOrder(order);
@@ -73,12 +82,12 @@ console.log(orderedItems);
           </div>
         </div>
         <div className="sidebar w-1/4">
-          {orderedItems.length === 0 ? (
+          {cartItems.length === 0 ? (
             <div>Cart is empty</div>
           ) : (
             <>
-              <div> You have {orderedItems.length} elements in your order</div>
-              {orderedItems.map((item: ItemInterface, index: number) => {
+              <div> You have {cartItems.length} elements in your order</div>
+              {cartItems.map((item: ItemInterface, index: number) => {
                 return (
                   <div className="flex flex-row my-4" key={index}>
                     <p>{item.name}</p>
