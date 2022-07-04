@@ -193,4 +193,5 @@ npm run test
 - Better UI
 - Better file disposition and architecture on frontend and backend
 - Fix the bug that changes quantity of Items after each order
+- Implement tests
 
