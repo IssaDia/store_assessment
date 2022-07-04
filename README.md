@@ -188,7 +188,7 @@ npm run test
 ## 📑 To improve
 
 - Use SQL query language instead of NoSQL to handle better the application needs (will certainly fix the little bug with the quantity)
-- Create smaller components when fixing Intrisicate attibutes error
+- Create smaller React components on frontend when i will find how to fix "Intrisicate attibutes error"
 - Allow to create Products with associated lot items
 - Better UI
 - Better file disposition and architecture on frontend and backend
