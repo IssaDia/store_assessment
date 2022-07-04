@@ -74,7 +74,7 @@ I chose to executes elements of CRUD one by one then adapt to the challenge.
 
 - [Node](https://nodejs.org/en/)
 - [Express](https://expressjs.com/)
-- [ViteJs](https://cli.vuejs.org/guide/creating-a-project.html](https://vitejs.dev/)
+- [ViteJs](https://vitejs.dev/)
 - [Typescript](https://fr.vuejs.org/v2/guide/typescript.html)
 - [Tailwind CSS](https://tailwindcss.com/docs/guides/vite)
 - [React](https://fr.reactjs.org/)
